@@ -18,12 +18,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jum-xS-aV7">
-                                <rect key="frame" x="67" y="269" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Watch iT " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKT-qC-WDb">
+                                <rect key="frame" x="131" y="428" width="113" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="113" id="P3N-LO-Wyd"/>
+                                    <constraint firstAttribute="height" constant="36" id="Un7-HO-lR0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" red="1" green="0.38930115080875471" blue="0.21840642401801946" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image3.png" translatesAutoresizingMaskIntoConstraints="NO" id="jum-xS-aV7">
+                                <rect key="frame" x="67.5" y="269" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="80C-Uh-fZE"/>
+                                    <constraint firstAttribute="width" constant="240" id="OyG-ax-dxJ"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.063730636461473589" green="0.78297959300596276" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xKT-qC-WDb" secondAttribute="bottom" constant="203" id="8Zb-oP-CcO"/>
+                            <constraint firstItem="xKT-qC-WDb" firstAttribute="top" secondItem="jum-xS-aV7" secondAttribute="bottom" constant="31" id="aXY-Ei-Jln"/>
+                            <constraint firstItem="jum-xS-aV7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cjT-G3-JoA"/>
+                            <constraint firstItem="xKT-qC-WDb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="mXg-6I-Dyi"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -32,4 +51,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="image3.png" width="1200" height="800"/>
+    </resources>
 </document>
