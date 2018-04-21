@@ -46,7 +46,7 @@
                                     <constraint firstAttribute="bottom" secondItem="Vfd-wN-RUU" secondAttribute="bottom" constant="5" id="Uve-B1-K2g"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="pZd-Fv-mkG" kind="push" id="T05-a8-rfZ"/>
+                                    <segue destination="pZd-Fv-mkG" kind="show" id="T05-a8-rfZ"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -134,7 +134,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="pZd-Fv-mkG" kind="push" id="JON-PY-ncA"/>
+                                    <segue destination="pZd-Fv-mkG" kind="show" id="JON-PY-ncA"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -193,6 +193,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="bVm-1N-FI9" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="haZ-ER-W5b">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -210,6 +211,6 @@
         <image name="logan.jpg" width="185" height="273"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T05-a8-rfZ"/>
+        <segue reference="JON-PY-ncA"/>
     </inferredMetricsTieBreakers>
 </document>
