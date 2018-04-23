@@ -9,9 +9,31 @@
 import Foundation
 import Alamofire
 
-class ApiManager{
+class ApiManager : NSObject {
     static let MOVIES_KEY : String="results"
     var moviesArr:[Movie]=[Movie]()
+    @objc var doneStr:String?
+//        {
+//
+//        var moviesArrret:[Movie]=[Movie]()
+//
+//        let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=17573bb6e87afe885b35b2c812b40aa8&sort_by=popularity.desc")!
+//        Alamofire.request(url).responseJSON{
+//            response in
+//            if let movieJson = response.result.value {
+//                let responseObject:Dictionary = movieJson as! Dictionary<String,Any>
+//                let movieObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
+//                for movie in movieObjArr {
+//                    moviesArrret.append(Movie(id: movie["id"] as! Int, title: movie["original_title"] as! String, rating: movie["vote_average"] as! Double, viewCount: movie["vote_count"] as! Int, overview: movie["overview"] as! String, releaseDate: movie["release_date"] as! String, backDropPath: movie["backdrop_path"] as! String, poster: movie["poster_path"] as! String))
+//                }
+//
+//            }
+//
+//        }
+//        return moviesArrret
+//
+//
+//    }
     
     public func fetchAllfilms() -> [Movie]{
         let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=17573bb6e87afe885b35b2c812b40aa8&sort_by=popularity.desc")!
@@ -22,14 +44,18 @@ class ApiManager{
                 let movieObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
                 for movie in movieObjArr {
                     self.moviesArr.append(Movie(id: movie["id"] as! Int, title: movie["original_title"] as! String, rating: movie["vote_average"] as! Double, viewCount: movie["vote_count"] as! Int, overview: movie["overview"] as! String, releaseDate: movie["release_date"] as! String, backDropPath: movie["backdrop_path"] as! String, poster: movie["poster_path"] as! String))
+                    
+                    
+                    
                 }
+                self.doneStr="done"
                 
             }
             
         }
-            return moviesArr
-        }
-        
+        return moviesArr
+    }
+    
     
     
 }
