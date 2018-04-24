@@ -21,7 +21,7 @@ class Movie: NSObject {
     var posterPath:String?
     
    
-    init(id:Int,title:String,rating:Double,viewCount:Int,overview:String,releaseDate:String,backDropPath:String,poster:String) {
+    init(id:Int,title:String,rating:Double,viewCount:Int,overview:String,releaseDate:String,backDropPath:String,poster:String,youtubeKey:String) {
         self.id = id
         self.title = title
         self.rating = rating
@@ -29,6 +29,8 @@ class Movie: NSObject {
         self.posterPath = poster
         self.releaseDate = releaseDate
         self.viewCount = viewCount
+        self.overview = overview
+        self.trailerKey = youtubeKey
 }
     
 }

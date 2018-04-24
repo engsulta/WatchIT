@@ -13,12 +13,18 @@ private let reuseIdentifier = "cell"
 
 class RecentMoviesController: UICollectionViewController {
     var movies:[Movie]=[Movie]()
-    @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
+    var dvc:DetailsViewController?
+   // @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     @objc let apiManager:ApiManager=ApiManager()
+    
+    override func awakeFromNib() {
+//        self.addObserver(self, forKeyPath: #keyPath(apiManager.doneStr), options: [.old,.new,.initial], context: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.addObserver(self, forKeyPath: #keyPath(apiManager.doneStr), options: [.old,.new,.initial], context: nil)
+        apiManager.myController=self
+        movies = apiManager.fetchAllfilms()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -28,8 +34,8 @@ class RecentMoviesController: UICollectionViewController {
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
-        progressIndicator.startAnimating()
-        movies = apiManager.fetchAllfilms()
+       // progressIndicator.startAnimating()
+        
         
     }
     // MARK: - de init
@@ -38,8 +44,9 @@ class RecentMoviesController: UICollectionViewController {
         removeObserver(self, forKeyPath: #keyPath(apiManager.doneStr))
     }
     // MARK: - updateUI
-    func updateUi(){
-        progressIndicator.stopAnimating()
+    open func updateUi(arr:[Movie]){
+        movies = arr
+       // progressIndicator.stopAnimating()
         self.collectionView?.reloadData()
         
     }
@@ -48,7 +55,7 @@ class RecentMoviesController: UICollectionViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == #keyPath(apiManager.doneStr) {
             // Update
-            updateUi()
+            updateUi(arr:self.movies)
         }
     }
     override func didReceiveMemoryWarning() {
@@ -110,19 +117,34 @@ class RecentMoviesController: UICollectionViewController {
     }
     
     
-    /*
+    
      // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+     /*override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
      return false
      }
      
      override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-     return false
+     return true
      }
      
      override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+        dvc?.movie=self.movies[indexPath.row]
      
-     }
-     */
-    
+     }*/
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+        dvc?.movie=self.movies[indexPath.row]
+        NSLog("@", self.movies[indexPath.row])
+        
+
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print(((self.collectionView?.indexPath(for: sender as! UICollectionViewCell))?.row)!)
+        if segue.identifier == "showDetails"{
+            dvc=segue.destination as? DetailsViewController
+            //dvc?.movie=self.movies[((self.collectionView?.indexPath(for: sender as! UICollectionViewCell))?.row)!]
+            
+            
+        }
+    }
 }

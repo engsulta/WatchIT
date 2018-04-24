@@ -7,12 +7,55 @@
 //
 
 import UIKit
-
+import SDWebImage
 class DetailsViewController: UIViewController {
+    var movie:Movie?
+    var coredata:CoreDataManager=CoreDataManager()
+    @IBAction func addToFav(_ sender: UIButton) {
+    
+        coredata.addMovie(movie: movie!, appDelegate: UIApplication.shared.delegate as! AppDelegate)
+    }
+    
+    @IBOutlet weak var movieYear: UILabel!
+    @IBOutlet weak var doneAction: UIBarButtonItem!
+   
+    @IBAction func watchOnYouTube(_ sender: UIButton) {
+        //let trailerUrl:String="https://youtube.com/watch?v=/"+(movie?.trailerKey)!
+       // let youtubeurl = URL(string: trailerUrl)
+        let youtubeId = movie?.trailerKey
+        var youtubeUrl = URL(string:"youtube://\(String(describing: youtubeId))")!
+        if UIApplication.shared.canOpenURL(youtubeUrl){
+            UIApplication.shared.open(youtubeUrl, options: [:], completionHandler:{ res in })
+        } else{
+            youtubeUrl = URL(string:"https://www.youtube.com/watch?v=\(String(describing: youtubeId))")!
+            //UIApplication.shared.openURL(youtubeUrl)
+            UIApplication.shared.open(youtubeUrl, options: [:], completionHandler:{ res in })
 
+        }
+    }
+    @IBOutlet weak var moviePosterRepeated: UIImageView!
+    @IBOutlet weak var movieOverView: UITextView!
+    @IBOutlet weak var movieGenres: UILabel!
+    @IBOutlet weak var movieDuration: UILabel!
+    @IBOutlet weak var movieTitle: UILabel!
+    @IBOutlet weak var movieRating: UILabel!
+    @IBOutlet weak var movieViewCount: UILabel!
+    @IBOutlet weak var moviePoster: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        movieTitle.text=movie?.title
+        movieRating.text=movie?.rating?.description
+        movieViewCount.text=movie?.viewCount?.description
+        let imageurl:String="https://image.tmdb.org/t/p/w500" + (self.movie?.posterPath)!
+        let url = URL(string: imageurl)
+        moviePoster.__sd_setImage(with: url)
+        moviePosterRepeated.__sd_setImage(with: url)
+        movieOverView.text=movie?.overview
+        movieGenres.text="Animaiton|Action"
+        movieDuration.text="1h:30min"
+    movieYear.text=movie?.releaseDate?.components(separatedBy: "-")[0]
+       
         // Do any additional setup after loading the view.
     }
 
