@@ -1,3 +1,4 @@
+
 //
 //  DetailsViewController.swift
 //  WatchIT
@@ -20,16 +21,16 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var doneAction: UIBarButtonItem!
    
     @IBAction func watchOnYouTube(_ sender: UIButton) {
-        //let trailerUrl:String="https://youtube.com/watch?v=/"+(movie?.trailerKey)!
+        //let trailerUrl:String="https://youtube.com/watch?v="+(movie?.trailerKey)!
        // let youtubeurl = URL(string: trailerUrl)
         let youtubeId = movie?.trailerKey
         var youtubeUrl = URL(string:"youtube://\(String(describing: youtubeId))")!
         if UIApplication.shared.canOpenURL(youtubeUrl){
             UIApplication.shared.open(youtubeUrl, options: [:], completionHandler:{ res in })
         } else{
-            youtubeUrl = URL(string:"https://www.youtube.com/watch?v=\(String(describing: youtubeId))")!
+            youtubeUrl = URL(string:"https://www.youtube.com/watch?v="+youtubeId!+".com")!
             //UIApplication.shared.openURL(youtubeUrl)
-            UIApplication.shared.open(youtubeUrl, options: [:], completionHandler:{ res in })
+        UIApplication.shared.open(youtubeUrl, options: [:], completionHandler:{ res in })
 
         }
     }

@@ -15,29 +15,29 @@ class ApiManager : NSObject {
     var myController:UICollectionViewController?
     
     @objc var doneStr:String?
-//        {
-//
-//        var moviesArrret:[Movie]=[Movie]()
-//
-//        let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=17573bb6e87afe885b35b2c812b40aa8&sort_by=popularity.desc")!
-//        Alamofire.request(url).responseJSON{
-//            response in
-//            if let movieJson = response.result.value {
-//                let responseObject:Dictionary = movieJson as! Dictionary<String,Any>
-//                let movieObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
-//                for movie in movieObjArr {
-//                    moviesArrret.append(Movie(id: movie["id"] as! Int, title: movie["original_title"] as! String, rating: movie["vote_average"] as! Double, viewCount: movie["vote_count"] as! Int, overview: movie["overview"] as! String, releaseDate: movie["release_date"] as! String, backDropPath: movie["backdrop_path"] as! String, poster: movie["poster_path"] as! String))
-//                }
-//
-//            }
-//
-//        }
-//        return moviesArrret
-//
-//
-//    }
+    //        {
+    //
+    //        var moviesArrret:[Movie]=[Movie]()
+    //
+    //        let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=17573bb6e87afe885b35b2c812b40aa8&sort_by=popularity.desc")!
+    //        Alamofire.request(url).responseJSON{
+    //            response in
+    //            if let movieJson = response.result.value {
+    //                let responseObject:Dictionary = movieJson as! Dictionary<String,Any>
+    //                let movieObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
+    //                for movie in movieObjArr {
+    //                    moviesArrret.append(Movie(id: movie["id"] as! Int, title: movie["original_title"] as! String, rating: movie["vote_average"] as! Double, viewCount: movie["vote_count"] as! Int, overview: movie["overview"] as! String, releaseDate: movie["release_date"] as! String, backDropPath: movie["backdrop_path"] as! String, poster: movie["poster_path"] as! String))
+    //                }
+    //
+    //            }
+    //
+    //        }
+    //        return moviesArrret
+    //
+    //
+    //    }
     
-    public func fetchAllfilms() -> [Movie]{
+    open func fetchAllfilms() -> [Movie]{
         let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=17573bb6e87afe885b35b2c812b40aa8&sort_by=popularity.desc")!
         Alamofire.request(url).responseJSON{
             response in
@@ -45,49 +45,75 @@ class ApiManager : NSObject {
                 let responseObject:Dictionary = movieJson as! Dictionary<String,Any>
                 let movieObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
                 for movie in movieObjArr {
-                   
-                    self.moviesArr.append(Movie(id: movie["id"] as! Int, title: movie["original_title"] as! String, rating: movie["vote_average"] as! Double, viewCount: movie["vote_count"] as! Int, overview: movie["overview"] as! String, releaseDate: movie["release_date"] as! String, backDropPath: movie["backdrop_path"] as! String, poster: movie["poster_path"] as! String,youtubeKey:self.getTrailerForMovie(movieKey:movie["id"] as! Int)))
                     
+                    self.moviesArr.append(Movie(id: movie["id"] as! Int, title: movie["original_title"] as! String, rating: movie["vote_average"] as! Double, viewCount: movie["vote_count"] as! Int, overview: movie["overview"] as! String, releaseDate: movie["release_date"] as! String, backDropPath: movie["backdrop_path"] as! String, poster: movie["poster_path"] as! String))
                     
-//                    print(self.moviesArr.count)
-//                    print(self.moviesArr[0].overview!)
                 }
+                self.fetchAllKeys()
                 self.doneStr="done"
                 (self.myController as! RecentMoviesController).updateUi(arr: self.moviesArr)
+                //                DispatchQueue.main.sync{
+                //
+                //                }
+                
                 
             }
             
         }
+        
         return moviesArr
     }
-    
-   func getTrailerForMovie(movieKey:Int)->String{
-    
-    var youtubeKey :String=""
-    let url = URL(string: "https://api.themoviedb.org/3/movie//\(movieKey)/videos?api_key=17573bb6e87afe885b35b2c812b40aa8")!
-    Alamofire.request(url).responseJSON{
-        response in
+    open func fetchAllKeys(){
         
-            
-      
-        if let trailerJson = response.result.value {
-            let responseObject:Dictionary = trailerJson as! Dictionary<String,Any>
-            let trailerObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
-            for trailer in trailerObjArr {
-                if (trailer["site"] as! String )=="YouTube"{
-                   youtubeKey = trailer["key"] as! String
-                    break
+        for movie in self.moviesArr{
+            let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie.id)/videos?api_key=17573bb6e87afe885b35b2c812b40aa8")!
+            Alamofire.request(url).responseJSON{
+                response in
+                if let trailerJson = response.result.value {
+                    let responseObject:Dictionary = trailerJson as! Dictionary<String,Any>
+                    let trailerObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
+                    for trailer in trailerObjArr {
+                        if (trailer["site"] as! String )=="YouTube"{//take first key only
+                            // self.youtubeKey = trailer["key"] as! String
+                            movie.trailerKey = trailer["key"] as? String
+                            break
+                        }
+                        
+                    }
+                    
                 }
                 
             }
-           
+            
+            
         }
         
     }
-    return youtubeKey
-    
-    }
-    
-    
-    
+//
+//    func getTrailerForMovie(movieKey:Int,movieIndex:Int){
+//
+//        let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieKey)/videos?api_key=17573bb6e87afe885b35b2c812b40aa8")!
+//        Alamofire.request(url).responseJSON{
+//            response in
+//
+//            if let trailerJson = response.result.value {
+//                let responseObject:Dictionary = trailerJson as! Dictionary<String,Any>
+//                let trailerObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
+//                for trailer in trailerObjArr {
+//                    if (trailer["site"] as! String )=="YouTube"{//take first key only
+//                        // self.youtubeKey = trailer["key"] as! String
+//                        self.moviesArr[movieIndex].posterPath = trailer["key"] as? String
+//                        break
+//                    }
+//                    
+//                }
+//
+//            }
+//
+//        }
+//
+//    }
+//
+//
+//
 }

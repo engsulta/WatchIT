@@ -24,7 +24,7 @@ class CoreDataManager {
         do{
             try  movies =  managedContext.fetch(request)
             for movie in movies{
-                retMovies.append(Movie(id: movie.value(forKey: "id") as! Int, title: movie.value(forKey: "title")as! String, rating: movie.value(forKey: "rating") as! Double, viewCount: movie.value(forKey: "viewCount")as! Int, overview: movie.value(forKey: "overview")as! String, releaseDate: movie.value(forKey: "releaseDate") as! String, backDropPath: movie.value(forKey: "backDropPath")as! String, poster: movie.value(forKey: "posterPath")as! String, youtubeKey: movie.value(forKey: "trailerKey")as! String))
+                retMovies.append(Movie(id: movie.value(forKey: "id") as! Int, title: movie.value(forKey: "title")as! String, rating: movie.value(forKey: "rating") as! Double, viewCount: movie.value(forKey: "viewCount")as! Int, overview: movie.value(forKey: "overview")as! String, releaseDate: movie.value(forKey: "releaseDate") as! String, backDropPath: movie.value(forKey: "backDropPath")as! String, poster: movie.value(forKey: "posterPath")as! String))
             }
             
             NSLog("%@","fetched done" )
