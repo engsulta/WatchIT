@@ -24,7 +24,7 @@ class DetailsViewController: UIViewController {
         //let trailerUrl:String="https://youtube.com/watch?v="+(movie?.trailerKey)!
        // let youtubeurl = URL(string: trailerUrl)
         let youtubeId = movie?.trailerKey
-        var youtubeUrl = URL(string:"youtube://\(String(describing: youtubeId))")!
+        var youtubeUrl = URL(string:"youtube://"+youtubeId!)!
         if UIApplication.shared.canOpenURL(youtubeUrl){
             UIApplication.shared.open(youtubeUrl, options: [:], completionHandler:{ res in })
         } else{
