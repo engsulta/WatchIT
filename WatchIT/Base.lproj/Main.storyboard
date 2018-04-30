@@ -669,7 +669,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WYI-ez-c1L">
-                                            <rect key="frame" x="0.0" y="0.5" width="375" height="200"/>
+                                            <rect key="frame" x="0.0" y="1" width="375" height="200"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logan.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="UiQ-rR-K2i">
                                                     <rect key="frame" x="0.0" y="0.0" width="183.5" height="200"/>
@@ -817,7 +817,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image3.png" translatesAutoresizingMaskIntoConstraints="NO" id="82i-JQ-s8m">
-                                <rect key="frame" x="67.5" y="269" width="240" height="128"/>
+                                <rect key="frame" x="67.5" y="244" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="gAc-sc-d6Q"/>
                                     <constraint firstAttribute="width" constant="240" id="wNQ-jR-9Ll"/>
@@ -837,7 +837,7 @@
                         <color key="backgroundColor" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="seK-P5-E3z" firstAttribute="centerX" secondItem="vAc-a1-fNW" secondAttribute="centerX" id="08l-Ak-9bM"/>
-                            <constraint firstItem="seK-P5-E3z" firstAttribute="top" secondItem="82i-JQ-s8m" secondAttribute="bottom" constant="-5" id="8Tw-ek-lja"/>
+                            <constraint firstItem="seK-P5-E3z" firstAttribute="top" secondItem="82i-JQ-s8m" secondAttribute="bottom" constant="20" id="8Tw-ek-lja"/>
                             <constraint firstItem="wwi-bp-EeE" firstAttribute="bottom" secondItem="seK-P5-E3z" secondAttribute="bottom" constant="239" id="a7w-Bo-TVW"/>
                             <constraint firstItem="82i-JQ-s8m" firstAttribute="centerX" secondItem="wwi-bp-EeE" secondAttribute="centerX" id="rFP-UC-fqQ"/>
                         </constraints>

@@ -39,25 +39,29 @@ class RecentMoviesController: UICollectionViewController {
         super.viewDidLoad()
         
         apiManager.fetchAllfilms(url:Filter.popularity) // default is popular movies
-        
-        
-    }
+     
+        }
     override func viewWillAppear(_ animated: Bool) {
         // progressIndicator.startAnimating()
-
+        
+        movieChangeObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name.movieChangeRadioChannel,
+            object: self.apiManager,
+            queue: OperationQueue.current,
+            using: {
+                notification in
+                // print("movies has changed\(self.movies.count)")
+                DispatchQueue.main.async {
+                    self.methodOfReceivedNotification(notification: notification)
+                    
+                }
+        }
+            
+        )
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         
-    movieChangeObserver = NotificationCenter.default.addObserver(
-    forName: Notification.Name.movieChangeRadioChannel,
-    object: self.apiManager,
-    queue: OperationQueue.main,
-    using: {
-    notification in
-       // print("movies has changed\(self.movies.count)")
-        self.methodOfReceivedNotification(notification: notification)
-    }
-    )
     }
     
 // MARK: - Notification handling
