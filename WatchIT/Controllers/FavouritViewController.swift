@@ -7,30 +7,62 @@
 //
 
 import UIKit
+import CoreData
 
 class FavouritViewController: UITableViewController {
     var coredata:CoreDataManager=CoreDataManager()
     var movies:[Movie]?
     var dvc:DetailsViewController?
     var oddoreven = false
+    var favMoviechangeObserver : NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        movies=coredata.fetchallMovies(appDelegate: UIApplication.shared.delegate as! AppDelegate)
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+//        coredata.label!.observe(label.size()){
+//            (label,change) in
+//
+//        }
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        movies=coredata.fetchallMovies(appDelegate: UIApplication.shared.delegate as! AppDelegate)
+     
     }
-    func updateUi(){
+   
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+        favMoviechangeObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name.favouriteChangeRadioChannel,
+            object: self.coredata,
+            queue: OperationQueue.main,
+            using: {
+                notification in
+                self.methodOfReceivedNotification(notification: notification)
+        }
+        )
+
+    }
+    
+    // MARK: - de init
+    override func viewWillDisappear(_ animated: Bool) {
+        if let observer = self.favMoviechangeObserver{
+            NotificationCenter.default.removeObserver(observer)
+
+        }
+
+    }
+    
+    @objc func methodOfReceivedNotification(notification: Notification){
+        updateUi(arr: notification.userInfo?["movies"] as! [Movie])
+    }
+    
+
+    func updateUi(arr: [Movie]){
+        self.movies = arr
         self.tableView.reloadData()
         
         
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
     
     // MARK: - Table view data source
     

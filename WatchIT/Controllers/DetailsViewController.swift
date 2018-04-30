@@ -15,8 +15,13 @@ class DetailsViewController: UIViewController {
     @IBAction func addToFav(_ sender: UIButton) {
     
         coredata.addMovie(movie: movie!, appDelegate: UIApplication.shared.delegate as! AppDelegate)
+        self.navigationController?.popViewController(animated: true)
+
     }
     
+    @IBAction func donePressed(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+    }
     @IBOutlet weak var movieYear: UILabel!
     @IBOutlet weak var doneAction: UIBarButtonItem!
    

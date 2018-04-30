@@ -8,24 +8,57 @@
 
 import Foundation
 import CoreData
+
+
+extension Notification.Name{
+    static let favouriteChangeRadioChannel = Notification.Name("favouriteChangeRadioChannel")
+}
+
+
 class CoreDataManager {
     var movies : [NSManagedObject] = [NSManagedObject]()
+    var label :String?
+    var retMovies:[Movie]=[Movie]()
+
+    
     
     func fetchallMovies(appDelegate:AppDelegate)-> [Movie]{
-        var retMovies:[Movie]=[Movie]()
-        
         //2
         let managedContext = appDelegate.persistentContainer.viewContext
         
         
         //3
-        let request = NSFetchRequest<NSManagedObject>(entityName: "MovieEntity")
-        
+        let request = NSFetchRequest<NSManagedObject>(entityName: "MEntity")
+        DispatchQueue.global(qos: .default).async {
+            do{
+                try  self.movies =  managedContext.fetch(request)
+                for movie in self.movies{
+                    //print (movie.value(forKey: "overview") ?? "nil"  )
+                    if movie.value(forKey: "overview") != nil {
+                        self.retMovies.append(Movie(id: movie.value(forKey: "id") as! Int , title: movie.value(forKey: "title") as! String, rating: movie.value(forKey: "rating") as! Double, viewCount: movie.value(forKey: "viewCount") as! Int, overview: movie.value(forKey: "overview")as! String, releaseDate: movie.value(forKey: "releaseDate") as! String, backDropPath: movie.value(forKey: "backDropPath")as! String, poster: movie.value(forKey: "posterPath")as! String))
+                    }
+                }
+//                NotificationCenter.default.post(name: Notification.Name.favouriteChangeRadioChannel, object: self, userInfo: ["movies" : self.retMovies])
+                
+                NSLog("%@","fetched done" )
+                
+            }catch{
+                
+                
+            }
+            DispatchQueue.main.async {
+                print("This is run on the main queue, after the previous code in outer block")
+            }
+        }
         do{
             try  movies =  managedContext.fetch(request)
             for movie in movies{
-                retMovies.append(Movie(id: movie.value(forKey: "id") as! Int, title: movie.value(forKey: "title")as! String, rating: movie.value(forKey: "rating") as! Double, viewCount: movie.value(forKey: "viewCount")as! Int, overview: movie.value(forKey: "overview")as! String, releaseDate: movie.value(forKey: "releaseDate") as! String, backDropPath: movie.value(forKey: "backDropPath")as! String, poster: movie.value(forKey: "posterPath")as! String))
+                //print (movie.value(forKey: "overview") ?? "nil"  )
+                if movie.value(forKey: "overview") != nil {
+                 retMovies.append(Movie(id: movie.value(forKey: "id") as! Int , title: movie.value(forKey: "title") as! String, rating: movie.value(forKey: "rating") as! Double, viewCount: movie.value(forKey: "viewCount") as! Int, overview: movie.value(forKey: "overview")as! String, releaseDate: movie.value(forKey: "releaseDate") as! String, backDropPath: movie.value(forKey: "backDropPath")as! String, poster: movie.value(forKey: "posterPath")as! String))
+               }
             }
+              NotificationCenter.default.post(name: Notification.Name.favouriteChangeRadioChannel, object: self, userInfo: ["movies" : self.retMovies])
             
             NSLog("%@","fetched done" )
             
@@ -45,7 +78,7 @@ class CoreDataManager {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         //3
-        let entity = NSEntityDescription.entity(forEntityName: "MovieEntity", in: managedContext)
+        let entity = NSEntityDescription.entity(forEntityName: "MEntity", in: managedContext)
         
         //4
         let movieObject  = NSManagedObject(entity: entity!, insertInto: managedContext)
