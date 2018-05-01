@@ -7,20 +7,28 @@
 //
 
 import Foundation
-class Movie: NSObject {
+class Movie :Decodable{
     var title : String?
     var rating : Double?
     var id : Int
     var viewCount:Int?
     var popularity:Double?
-    var generIds:[Int]=[Int]()
+    
     var overview: String?
     var releaseDate:String?
     var backDropPath:String?
     var trailerKey:String?
     var posterPath:String?
     
-   
+    init() {
+        id = 0
+        title = ""
+        posterPath = ""
+        overview = ""
+        releaseDate = ""
+        viewCount = 0
+        
+    }
     init(id:Int,title:String,rating:Double,viewCount:Int,overview:String,releaseDate:String,backDropPath:String,poster:String) {
         self.id = id
         self.title = title

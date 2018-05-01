@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import UIKit
 
 extension Notification.Name{
     static let favouriteChangeRadioChannel = Notification.Name("favouriteChangeRadioChannel")
@@ -38,7 +38,7 @@ class CoreDataManager {
                         self.retMovies.append(Movie(id: movie.value(forKey: "id") as! Int , title: movie.value(forKey: "title") as! String, rating: movie.value(forKey: "rating") as! Double, viewCount: movie.value(forKey: "viewCount") as! Int, overview: movie.value(forKey: "overview")as! String, releaseDate: movie.value(forKey: "releaseDate") as! String, backDropPath: movie.value(forKey: "backDropPath")as! String, poster: movie.value(forKey: "posterPath")as! String))
                     }
                 }
-//                NotificationCenter.default.post(name: Notification.Name.favouriteChangeRadioChannel, object: self, userInfo: ["movies" : self.retMovies])
+               NotificationCenter.default.post(name: Notification.Name.favouriteChangeRadioChannel, object: self, userInfo: ["movies" : self.retMovies])
                 
                 NSLog("%@","fetched done" )
                 
@@ -70,6 +70,68 @@ class CoreDataManager {
         
         }
     
+    func addToFavorite(movie: Movie)->Bool{
+      
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "MEntity", in: context)
+        var newMovie = NSManagedObject(entity: entity!,insertInto: context)
+        newMovie.setValue(movie.id, forKey: "id")
+        newMovie.setValue(movie.overview, forKey:"overview" )
+        newMovie.setValue(movie.title, forKey: "title")
+        newMovie.setValue(movie.posterPath, forKey:"posterPath" )
+        newMovie.setValue(movie.releaseDate, forKey:"releaseDate" )
+        newMovie.setValue(movie.backDropPath, forKey: "backDropPath")
+        newMovie.setValue(movie.rating, forKey: "rating")
+        newMovie.setValue(movie.trailerKey, forKey: "trailerKey")
+        
+        do {
+            try context.save()
+            return true
+            
+        } catch {
+            print("Failed saving")
+            
+        }
+        return false
+    }
+    
+    
+    func getAllMovies() -> [Movie] {
+       
+        var movies = [Movie]()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MEntity")
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let result = try context.fetch(request)
+            
+            for data in result as! [NSManagedObject] {
+                var movie = Movie()
+               
+                movie.id = data.value(forKey: "id") as! Int
+                movie.title = data.value(forKey: "title") as! String
+                movie.releaseDate = data.value(forKey: "releaseDate") as! String
+                movie.overview = data.value(forKey: "overview") as? String ?? ""
+                movie.posterPath = data.value(forKey: "posterPath") as? String ?? ""
+                movie.viewCount = data.value(forKey: "viewCount") as! Int
+                movie.backDropPath = data.value(forKey: "backDropPath") as! String
+                movie.trailerKey = data.value(forKey: "trailerKey") as? String ?? ""
+                movie.rating = data.value(forKey: "rating") as! Double
+                movies.append(movie)
+                
+            }
+            
+        } catch {
+            
+            print("Failed")
+        }
+        
+        
+        return movies
+    }
     func addMovie( movie:Movie ,appDelegate:AppDelegate) {
        
        

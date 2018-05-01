@@ -130,7 +130,7 @@ class RecentMoviesController: UICollectionViewController , UIPopoverPresentation
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
         dvc?.movie=self.movies[indexPath.row]
-        NSLog("@", self.movies[indexPath.row])
+        
         
         
     }

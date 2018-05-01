@@ -23,8 +23,8 @@ class FavouritViewController: UITableViewController {
 //
 //        }
         
-        movies=coredata.fetchallMovies(appDelegate: UIApplication.shared.delegate as! AppDelegate)
-     
+       // movies = coredata.fetchallMovies(appDelegate: UIApplication.shared.delegate as! AppDelegate)
+        movies = coredata.getAllMovies()
     }
    
     
@@ -82,15 +82,18 @@ class FavouritViewController: UITableViewController {
         
         // Configure the cell...
         
-        let movieImageView1 = cell.viewWithTag(0) as! UIImageView
-        let movieImageView2 = cell.viewWithTag(1) as! UIImageView
+        let movieImageView1 = cell.viewWithTag(1) as! UIImageView
+        let movieImageView2 = cell.viewWithTag(2) as! UIImageView
         
         let imageurl:String="https://image.tmdb.org/t/p/w500" + (self.movies?[indexPath.row].posterPath)!
         let url = URL(string: imageurl)
         movieImageView1.__sd_setImage(with: url)
+        if (indexPath.row+1 < self.movies!.count){
         let imageurl2:String="https://image.tmdb.org/t/p/w500" + (self.movies![indexPath.row+1].posterPath)!
         let url2 = URL(string: imageurl2)
-        movieImageView2.__sd_setImage(with: url2)
+            movieImageView2.__sd_setImage(with: url2)
+            
+        }
         return cell
     }
     

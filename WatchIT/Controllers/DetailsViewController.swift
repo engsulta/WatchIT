@@ -13,10 +13,10 @@ class DetailsViewController: UIViewController {
     var movie:Movie?
     var coredata:CoreDataManager=CoreDataManager()
     @IBAction func addToFav(_ sender: UIButton) {
-    
-        coredata.addMovie(movie: movie!, appDelegate: UIApplication.shared.delegate as! AppDelegate)
+        if  coredata.addToFavorite(movie: movie!) == true {
+        //coredata.addMovie(movie: movie!, appDelegate: UIApplication.shared.delegate as! AppDelegate)
         self.navigationController?.popViewController(animated: true)
-
+        }
     }
     
     @IBAction func donePressed(_ sender: UIBarButtonItem) {

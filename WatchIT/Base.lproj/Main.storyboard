@@ -715,16 +715,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WYI-ez-c1L">
-                                            <rect key="frame" x="0.0" y="1" width="375" height="200"/>
+                                            <rect key="frame" x="0.0" y="0.5" width="375" height="200"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logan.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="UiQ-rR-K2i">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logan.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="UiQ-rR-K2i">
                                                     <rect key="frame" x="0.0" y="0.0" width="183.5" height="200"/>
                                                     <gestureRecognizers/>
                                                     <connections>
                                                         <outletCollection property="gestureRecognizers" destination="tLZ-lp-hrp" appends="YES" id="9iG-3u-RKQ"/>
                                                     </connections>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logan.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Dqp-c3-8Yl">
+                                                <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logan.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Dqp-c3-8Yl">
                                                     <rect key="frame" x="191.5" y="0.0" width="183.5" height="200"/>
                                                     <gestureRecognizers/>
                                                     <connections>
@@ -1083,6 +1083,6 @@ pyasJrkmvCbJJs4m1ibZJt4m5ibpJvsm/icDAAAAAAAAAgEAAAAAAAAAWQAAAAAAAAAAAAAAAAAAJwU
         <image name="youtube1" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MId-gZ-5JJ"/>
+        <segue reference="u06-5F-VCu"/>
     </inferredMetricsTieBreakers>
 </document>
