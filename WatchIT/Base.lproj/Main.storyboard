@@ -60,9 +60,12 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="mWe-Sa-uRl">
-                        <barButtonItem key="rightBarButtonItem" title="By View Count" id="ma1-qt-00d">
+                        <barButtonItem key="rightBarButtonItem" title="filter" id="ma1-qt-00d">
                             <connections>
                                 <action selector="byviewCount:" destination="HKa-52-Uar" id="con-q4-Vdy"/>
+                                <segue destination="8vi-j7-mgS" kind="popoverPresentation" identifier="show filter menu" popoverAnchorBarButtonItem="ma1-qt-00d" id="aYi-AM-zpb">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -357,6 +360,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zaT-rY-GrB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2514" y="-575"/>
+        </scene>
+        <!--Filter Menu View Controller-->
+        <scene sceneID="Ejh-tf-uLQ">
+            <objects>
+                <viewController id="8vi-j7-mgS" customClass="FilterMenuViewController" customModule="WatchIT" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="grs-e2-PYy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="RLm-ao-zMP">
+                                <rect key="frame" x="142.5" y="300" width="91" height="68"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJp-3R-5O1">
+                                        <rect key="frame" x="0.0" y="0.0" width="91" height="30"/>
+                                        <state key="normal" title="Most Popular"/>
+                                        <connections>
+                                            <action selector="onMostPopularPressed:" destination="8vi-j7-mgS" eventType="touchUpInside" id="eGa-Tl-MAP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AwU-k7-kWy">
+                                        <rect key="frame" x="0.0" y="38" width="91" height="30"/>
+                                        <state key="normal" title="Most Viewed"/>
+                                        <connections>
+                                            <action selector="onMostViewed:" destination="8vi-j7-mgS" eventType="touchUpInside" id="Dt3-ez-z5x"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="RLm-ao-zMP" firstAttribute="centerX" secondItem="grs-e2-PYy" secondAttribute="centerX" id="PyD-zB-UGm"/>
+                            <constraint firstItem="RLm-ao-zMP" firstAttribute="centerY" secondItem="grs-e2-PYy" secondAttribute="centerY" id="vhb-Yl-BIk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="tiz-0l-4NK"/>
+                    </view>
+                    <connections>
+                        <outlet property="mytopview" destination="RLm-ao-zMP" id="x2H-gx-6JN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7NW-JF-33i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3286" y="-647"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="enc-Sg-FIL">

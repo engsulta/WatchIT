@@ -13,10 +13,12 @@ private let reuseIdentifier = "cell"
 
 struct Filter {
     static let popularity = "https://api.themoviedb.org/3/discover/movie?api_key=17573bb6e87afe885b35b2c812b40aa8&sort_by=popularity.desc"
-    static let views = "https://api.themoviedb.org/3/discover/movie?api_key=17573bb6e87afe885b35b2c812b40aa8&sort_by=view_count.desc"
+    static let views = "https://api.themoviedb.org/3/discover/movie?api_key=17573bb6e87afe885b35b2c812b40aa8&sort_by=release_date.desc"
 }
 
-class RecentMoviesController: UICollectionViewController {
+class RecentMoviesController: UICollectionViewController , UIPopoverPresentationControllerDelegate , MovieUpdateDelegate{
+   
+    
     //@IBOutlet weak var movieLoadingIndicator: UIActivityIndicatorView!
     var movies:[Movie]=[Movie]()
     
@@ -27,7 +29,7 @@ class RecentMoviesController: UICollectionViewController {
     let apiManager:ApiManager=ApiManager()
     
     override func awakeFromNib() {
-       
+        
     }
     
     @IBAction func byviewCount(_ sender: UIBarButtonItem) {
@@ -39,8 +41,8 @@ class RecentMoviesController: UICollectionViewController {
         super.viewDidLoad()
         
         apiManager.fetchAllfilms(url:Filter.popularity) // default is popular movies
-     
-        }
+        
+    }
     override func viewWillAppear(_ animated: Bool) {
         // progressIndicator.startAnimating()
         
@@ -64,7 +66,7 @@ class RecentMoviesController: UICollectionViewController {
         
     }
     
-// MARK: - Notification handling
+    // MARK: - Notification handling
     @objc func methodOfReceivedNotification(notification: Notification){
         updateUi(arr: notification.userInfo?["movies"] as! [Movie])
     }
@@ -72,73 +74,100 @@ class RecentMoviesController: UICollectionViewController {
     
     // MARK: - de init
     override func viewWillDisappear(_ animated: Bool) {
-    if let observer = self.movieChangeObserver{
-    NotificationCenter.default.removeObserver(observer)
-    
+        if let observer = self.movieChangeObserver{
+            NotificationCenter.default.removeObserver(observer)
+            
+        }
+        
     }
     
-    }
     
-
     // MARK: - updateUI
     open func updateUi(arr:[Movie]){
-       movies = arr
-     //movieLoadingIndicator.stopAnimating()
-    self.collectionView?.reloadData()
-    
+        movies = arr
+        //movieLoadingIndicator.stopAnimating()
+        self.collectionView?.reloadData()
+        
     }
-  
+    
     
     // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-    // #warning Incomplete implementation, return the number of sections
-    return 1
+        // #warning Incomplete implementation, return the number of sections
+        return 1
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-   
-    return movies.count
+        
+        return movies.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-    
-    // Configure the cell
-    
-    let movieImageView:UIImageView  = cell.viewWithTag(1) as! UIImageView
-    //[cell viewWithTag:1];
-    
-    let imageurl:String="https://image.tmdb.org/t/p/w500" + movies[indexPath.row].posterPath!
-    let url = URL(string: imageurl)
-    movieImageView.__sd_setImage(with: url)
-    
-    return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        
+        // Configure the cell
+        
+        let movieImageView:UIImageView  = cell.viewWithTag(1) as! UIImageView
+        //[cell viewWithTag:1];
+        
+        let imageurl:String="https://image.tmdb.org/t/p/w500" + movies[indexPath.row].posterPath!
+        let url = URL(string: imageurl)
+        movieImageView.__sd_setImage(with: url)
+        
+        return cell
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-    return true
+        return true
     }
     
     
     
- 
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    print(indexPath.row)
-    dvc?.movie=self.movies[indexPath.row]
-    NSLog("@", self.movies[indexPath.row])
-    
-    
+        print(indexPath.row)
+        dvc?.movie=self.movies[indexPath.row]
+        NSLog("@", self.movies[indexPath.row])
+        
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    print(((self.collectionView?.indexPath(for: sender as! UICollectionViewCell))?.row)!)
-    if segue.identifier == "showDetails"{
-    dvc=segue.destination as? DetailsViewController
-    //dvc?.movie=self.movies[((self.collectionView?.indexPath(for: sender as! UICollectionViewCell))?.row)!]
-    
-    
+        //  print(((self.collectionView?.indexPath(for: sender as! UICollectionViewCell))?.row)!)
+        
+        switch (segue.identifier){
+        case "showDetails"? :
+            dvc=segue.destination as? DetailsViewController
+            //dvc?.movie=self.movies[((self.collectionView?.indexPath(for: sender as! UICollectionViewCell))?.row)!]
+            
+        case "show filter menu"? :let destination = segue.destination as! FilterMenuViewController
+        if let ppc = destination.popoverPresentationController {
+            ppc.delegate=self
+            
+            destination.movieUpdateDelegate = self
+            
+            }
+         default :  break
+        
     }
+    }
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none 
+        
+    }
+    func updateMoviewithFilterOption(str:String) {
+        let withurl : String?
+        if str == "mostpopular" {
+             withurl = Filter.popularity
+        }else {
+             withurl = Filter.views
+            
+        }
+        self.movies.removeAll()
+        apiManager.fetchAllfilms(url:withurl!) // default is popular movies
+        
+
     }
 }

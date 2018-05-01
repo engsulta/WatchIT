@@ -28,9 +28,10 @@ class ApiManager : NSObject {
             if let movieJson = response.result.value {
                 let responseObject:Dictionary = movieJson as! Dictionary<String,Any>
                 let movieObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
+                self.moviesArr.removeAll()
                 for movie in movieObjArr {
                     
-                    self.moviesArr.append(Movie(id: movie["id"] as! Int, title: movie["original_title"] as! String, rating: movie["vote_average"] as! Double, viewCount: movie["vote_count"] as! Int, overview: movie["overview"] as! String, releaseDate: movie["release_date"] as! String, backDropPath: movie["backdrop_path"] as! String, poster: movie["poster_path"] as! String))
+                    self.moviesArr.append(Movie(id: movie["id"] as! Int, title: movie["original_title"] as? String ?? "notitle", rating: movie["vote_average"] as! Double, viewCount: movie["vote_count"] as! Int, overview: movie["overview"] as? String ?? "", releaseDate: movie["release_date"] as! String, backDropPath: movie["backdrop_path"] as? String ?? "", poster: movie["poster_path"] as? String ?? ""))
                     
                 }
                 self.fetchAllKeys()
@@ -53,7 +54,7 @@ class ApiManager : NSObject {
                 response in
                 if let trailerJson = response.result.value {
                     let responseObject:Dictionary = trailerJson as! Dictionary<String,Any>
-                    let trailerObjArr:[Dictionary] = responseObject["results"] as! [Dictionary<String,Any>]
+                    let trailerObjArr:[Dictionary] = responseObject["results"] as? [Dictionary<String,Any>] ?? []
                     for trailer in trailerObjArr {
                         if (trailer["site"] as! String )=="YouTube"{//take first key only
                             // self.youtubeKey = trailer["key"] as! String
