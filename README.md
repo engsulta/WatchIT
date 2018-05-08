@@ -1,6 +1,8 @@
-# WatchIT
+# WatchI
 
-MVP Branch and VIPER Branch still under development 
+another design pattern architecture VIPER
+
+https://github.com/engsulta/WatchIt-ViperArchitecture
 
 ![screen shot 2018-04-30 at 1 55 55 pm](https://user-images.githubusercontent.com/34632263/39713452-ac033f68-51db-11e8-9a26-d49b6f62e0b9.png)
 
