@@ -1,5 +1,5 @@
 # WatchI
-
+This app allow users to discover the most popular movies playing. you can see trailer add movie to your favorites read reviews of  a selected movie
 another design pattern architecture VIPER
 
 https://github.com/engsulta/WatchIt-ViperArchitecture
